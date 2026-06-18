@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MehulBichpuriya | Diagnostic Centre & Blood Test Laboratory</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="top-bar-links">
+                <a href="#about"><i class="fa-solid fa-circle-info"></i> Investors</a>
+                <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+            <div class="top-bar-contact">
+                <span>Customer Care: <a href="tel:9644306633">9644306633</a></span>
+                <span>Email: <a href="mailto:customer.care@mehulconnect.com">customer.care@mehulconnect.com</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="container header-container">
+            <!-- Brand Logo -->
+            <div class="logo">
+                <a href="#" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: var(--primary-color); display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-microscope" style="color: var(--accent-color);"></i> Mehul<span style="color: var(--secondary-color);">Connect</span>
+                </a>
+            </div>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="desktop-nav">
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link" onclick="openMyBookings()">My Bookings</a></li>
+                    <li><a href="#" class="nav-link" onclick="openModal('modal-prescription')">Upload Prescription</a></li>
+                    <li><a href="#" class="nav-link" onclick="openModal('modal-report-portal')">Download Report</a></li>
+                    <li><a href="#packages" class="nav-link">Health Packages</a></li>
+                    <li><a href="#tests" class="nav-link">Individual Tests</a></li>
+                </ul>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <!-- Location selector -->
+                <div class="location-selector" id="location-selector">
+                    <i class="fa-solid fa-location-dot" style="color: var(--primary-color);"></i>
+                    <span id="current-city">Indore</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+                    <div class="location-dropdown" id="location-dropdown">
+                        <div class="location-option">Indore</div>
+                    </div>
+                </div>
+
+                <!-- Guest Profile widget -->
+                <div class="user-widget" id="user-widget" onclick="handleProfileWidgetClick()" style="cursor: pointer;">
+                    <div class="user-avatar" id="user-avatar-icon"><i class="fa-solid fa-user"></i></div>
+                    <span id="user-display-name">Guest Patient</span>
+                </div>
+
+                <!-- Cart Action -->
+                <button class="cart-btn" id="cart-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-badge-count">0</span>
+                </button>
+
+                <!-- Mobile Menu Hamburg Toggle -->
+                <button class="menu-toggle" onclick="openMobileNav()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <!-- Hero Description & Search -->
+            <div class="hero-content">
+                <h1>State-of-the-Art Diagnostics, <span>Trusted by Millions</span></h1>
+                <p>Book home sample collection for blood tests and full body checkups. Experience precise, fast, and secure digital medical reports.</p>
+                
+                <!-- Autocomplete Search Container -->
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon-inside"></i>
+                        <input type="text" id="global-search" placeholder="Search Blood Tests or Packages (e.g. CBC, Diabetes, Thyroid)...">
+                    </div>
+                    <button class="search-btn">Search</button>
+                    <!-- Suggestions drop -->
+                    <div class="search-suggestions" id="search-suggestions">
+                        <!-- Dynamically filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Diagnostic stats counts -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Diagnostics Support Available</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>NABL & CAP Labs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Buttons Frame -->
+            <div class="hero-actions-container">
+                <div class="quick-actions-panel">
+                    <h2>How can we help you today?</h2>
+                    <div class="quick-actions-grid">
+                        <div class="action-card" onclick="window.location.href='#packages';">
+                            <div class="action-icon"><i class="fa-solid fa-house-chimney-medical"></i></div>
+                            <h3>Book Home Collection</h3>
+                        </div>
+                        <div class="action-card" onclick="openModal('modal-prescription')">
+                            <div class="action-icon"><i class="fa-solid fa-file-prescription"></i></div>
+                            <h3>Upload Prescription</h3>
+                        </div>
+                        <div class="action-card" onclick="openModal('modal-report-portal')">
+                            <div class="action-icon"><i class="fa-solid fa-file-arrow-down"></i></div>
+                            <h3>Download Smart Report</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMOTIONAL ACCORDION/SLIDER -->
+    <section class="promos">
+        <div class="container">
+            <div class="promo-slider">
+                <div class="promo-card" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=500&q=80')">
+                    <div class="promo-content">
+                        <span class="promo-badge">Limited Offer</span>
+                        <h3>Monsoon Health Shield</h3>
+                        <p>Get 20% flat discount on complete panel checks.</p>
+                        <a href="#packages" class="promo-btn">Use Code: FIT20 <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="promo-card" style="background-image: url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=500&q=80')">
+                    <div class="promo-content">
+                        <span class="promo-badge">Senior Citizen</span>
+                        <h3>Active Aging Checkup</h3>
+                        <p>Special geriatric wellness panels and blood diagnostics.</p>
+                        <a href="#packages" class="promo-btn">Use Code: HEALTH10 <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="promo-card" style="background-image: url('https://images.unsplash.com/photo-1511174511562-5f7f18b854f2?auto=format&fit=crop&w=500&q=80')">
+                    <div class="promo-content">
+                        <span class="promo-badge">Wellness</span>
+                        <h3>Full Body Screening</h3>
+                        <p>Track 82 essential biomarkers from the comfort of home.</p>
+                        <a href="#packages" class="promo-btn">Book Swasthfit <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED HEALTH CHECKUP PACKAGES -->
+    <section class="section" id="packages">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular SwasthFit Packages</h2>
+                <p>Comprehensive health packages custom-tailored for your family's diagnostic wellness profiling.</p>
+            </div>
+            <!-- Dynamic packages container filled by JS -->
+            <div class="packages-grid" id="packages-grid">
+                <!-- Loaded Dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- POPULAR DIAGNOSTIC TESTS -->
+    <section class="section section-bg-alt" id="tests">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Individual Blood Tests</h2>
+                <p>Individual pathology tests scheduled for lab examination or home clinical sample collection.</p>
+            </div>
+            <!-- Dynamic tests container filled by JS -->
+            <div class="tests-grid" id="tests-grid">
+                <!-- Loaded Dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CLINICAL ACCREDITATIONS -->
+    <section class="accreditations-banner">
+        <div class="container accreditations-flex">
+            <div class="accred-logo">
+                <i class="fa-solid fa-award" style="font-size: 36px; color: var(--primary-color);"></i>
+                <div class="accred-text">
+                    <h4>NABL Accredited</h4>
+                    <p>National Accreditation Board for Testing Labs</p>
+                </div>
+            </div>
+            <div class="accred-logo">
+                <i class="fa-solid fa-shield-halved" style="font-size: 36px; color: var(--primary-color);"></i>
+                <div class="accred-text">
+                    <h4>CAP Certified</h4>
+                    <p>College of American Pathologists</p>
+                </div>
+            </div>
+            <div class="accred-logo">
+                <i class="fa-solid fa-clipboard-check" style="font-size: 36px; color: var(--primary-color);"></i>
+                <div class="accred-text">
+                    <h4>ISO 9001:2015</h4>
+                    <p>Internationally Recognised Quality Standards</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="section" id="why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose MehulConnect?</h2>
+                <p>Setting diagnostic benchmarks with clinical accuracy, safety protocols, and smart digital reporting.</p>
+            </div>
+            <div class="why-us-grid">
+                <div class="why-card">
+                    <div class="why-icon"><i class="fa-solid fa-house-user"></i></div>
+                    <h3>Safe Home Collection</h3>
+                    <p>BMLT/DMLT certified phlebotomists collect samples in sterile vacuum tubes following WHO collection protocols.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3>Interactive Smart Reports</h3>
+                    <p>Interpret medical parameters effortlessly with clinical graphs, color-coded flags, and doctor recommendations.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon"><i class="fa-solid fa-microscope"></i></div>
+                    <h3>Advanced Test Labs</h3>
+                    <p>High-precision automated robotic testing equipment ensures minimal manual intervention and accurate diagnostics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQS ACCORDION -->
+    <section class="section section-bg-alt" id="faqs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Answers to common questions about diagnostic tests, appointment scheduling, and reports.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How can I book a home blood sample collection?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            You can book a home sample collection by adding your required tests to the shopping cart, clicking checkout, and scheduling your patient details, address, and desired date/time slot. Our phlebotomist will visit you at the scheduled slot.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is a diagnostic "Smart Report"?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our Smart Reports simplify clinical jargon. They display color-coded indicators for your test values (Normal, Borderline, High), historic test graphs to track parameters overtime, and advice recommendations curated by medical experts.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Are the lab technicians certified?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, all our phlebotomists and lab staff hold certified DMLT (Diploma in Medical Laboratory Technology) or BMLT degrees and undergo regular quality training in sterile extraction processes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CUSTOMER REVIEWS SLIDER -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Patients Say</h2>
+                <p>Read review responses from patients who booked health packages and pathology services with us.</p>
+            </div>
+            
+            <div class="testimonial-wrapper">
+                <div class="testimonial-container">
+                    <div class="testimonial-slide active">
+                        <div class="testimonial-avatar">A</div>
+                        <div class="testimonial-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Booking home collection was extremely convenient. The phlebotomist reached exactly on time, wore sanitized gear, and extracted the sample painlessly. The report was available online in 10 hours!"</p>
+                        <span class="testimonial-author">- Amit Sengupta, Vijay Nagar, Indore</span>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-avatar">M</div>
+                        <div class="testimonial-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"The Smart Report structure is incredible. Usually, I have to search Google for every blood test parameter, but the color-coded indicators and doctor recommendation clarified my health status instantly."</p>
+                        <span class="testimonial-author">- Meera Deshmukh, Palasia, Indore</span>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-avatar">R</div>
+                        <div class="testimonial-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <p class="testimonial-text">"Regular user for my diabetic checkups. Affordable prices, accredited NABL laboratories, and highly professional service. The digital history section makes it easy to download past records."</p>
+                        <span class="testimonial-author">- Rajesh Kumar, Rajendra Nagar, Indore</span>
+                    </div>
+                </div>
+                <div class="testimonial-nav">
+                    <button class="test-nav-btn" onclick="changeTestimonial(-1)"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button class="test-nav-btn" onclick="changeTestimonial(1)"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contact">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <a href="#" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: var(--bg-white); display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-microscope" style="color: var(--accent-color);"></i> Mehul<span style="color: var(--secondary-color);">Connect</span>
+                    </a>
+                </div>
+                <p style="margin-top: 15px;">MehulConnect is one of the nation's leading pathology diagnostic chain networks, establishing excellence in medical test report accuracy since 1949.</p>
+                <div class="footer-socials">
+                    <a href="https://www.linkedin.com/" target="_blank" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://twitter.com/" target="_blank" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.youtube.com/" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/" target="_blank" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="openModal('modal-prescription')">Upload Prescription</a></li>
+                    <li><a href="#" onclick="openModal('modal-report-portal')">Download Reports</a></li>
+                    <li><a href="#" onclick="openModal('modal-find-lab')">Nearest Diagnostics Lab</a></li>
+                    <li><a href="#packages">Health Swasthfit Packages</a></li>
+                    <li><a href="admin.html">Admin Portal Login</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Corporate Group</a></li>
+                    <li><a href="#">Diagnostic Careers</a></li>
+                    <li><a href="#">Annual Quality Report</a></li>
+                    <li><a href="#">Press & Media Relations</a></li>
+                    <li><a href="#">Business Partnership</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact & Support</h3>
+                <div class="footer-contact-info">
+                    <p><i class="fa-solid fa-phone"></i> 9644306633</p>
+                    <p><i class="fa-solid fa-envelope"></i> customer.care@mehulconnect.com</p>
+                    <p><i class="fa-solid fa-clock"></i> 24/7 Diagnostics Support Available</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <div class="footer-copyright">
+                <span>© 2026 MehulConnect. All Rights Reserved.</span>
+            </div>
+            <div class="footer-terms">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">NABL Disclaimer</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART SIDE DRAWER WIDGET -->
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h2>Your Booking Cart</h2>
+            <button class="cart-close-btn" id="cart-close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div class="cart-body">
+            <!-- CART ITEMS LIST STAGE -->
+            <div id="cart-items-container">
+                <div class="cart-empty-state" id="cart-empty">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <p>Your cart is empty.</p>
+                    <p style="font-size: 13px; margin-top: 8px;">Explore tests and packages below to book home sample collection.</p>
+                </div>
+                
+                <div id="cart-items-list">
+                    <!-- Filled Dynamically -->
+                </div>
+
+                <!-- Coupon Section -->
+                <div class="coupon-section" id="coupon-section-box" style="display: none;">
+                    <div class="coupon-box">
+                        <input type="text" id="coupon-code" placeholder="Enter Coupon Code (FIT20, HEALTH10)">
+                        <button class="coupon-btn" id="apply-coupon-btn">Apply</button>
+                    </div>
+                    <div id="coupon-msg" class="coupon-message"></div>
+                </div>
+            </div>
+
+            <!-- CHECKOUT FORM STAGE -->
+            <div class="checkout-form-container" id="checkout-wizard">
+                <!-- Step 1: Patient details -->
+                <div class="checkout-step-panel" id="step-1">
+                    <div class="checkout-step-header">
+                        <span>Patient Details</span>
+                        <span>Step 1 of 3</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-name">Patient Full Name*</label>
+                        <input type="text" id="patient-name" placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Age & Gender*</label>
+                        <div style="display: flex; gap: 12px;">
+                            <input type="number" id="patient-age" placeholder="Age" style="width: 80px;">
+                            <div class="gender-select">
+                                <div class="gender-option active" data-gender="Male">Male</div>
+                                <div class="gender-option" data-gender="Female">Female</div>
+                                <div class="gender-option" data-gender="Other">Other</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-phone">Mobile Phone Number*</label>
+                        <input type="tel" id="patient-phone" placeholder="10-digit mobile number">
+                    </div>
+
+                </div>
+
+                <!-- Step 2: Address -->
+                <div class="checkout-step-panel" id="step-2" style="display: none;">
+                    <div class="checkout-step-header">
+                        <span>Collection Address</span>
+                        <span>Step 2 of 3</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-address">Home Street Address*</label>
+                        <textarea id="patient-address" placeholder="Flat/House No, Building, Area details" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-pin">Area Pincode*</label>
+                        <input type="text" id="patient-pin" placeholder="6-digit Area Pincode">
+                    </div>
+
+                </div>
+
+                <!-- Step 3: Slots Calendar -->
+                <div class="checkout-step-panel" id="step-3" style="display: none;">
+                    <div class="checkout-step-header">
+                        <span>Schedule Sample Collection</span>
+                        <span>Step 3 of 3</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-date">Choose Appointment Date*</label>
+                        <input type="date" id="booking-date">
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Time Slot*</label>
+                        <div class="slots-grid">
+                            <div class="slot-item">06:00 - 08:00 AM</div>
+                            <div class="slot-item">08:00 - 10:00 AM</div>
+                            <div class="slot-item">10:00 - 12:00 PM</div>
+                            <div class="slot-item">12:00 - 02:00 PM</div>
+                            <div class="slot-item">02:00 - 04:00 PM</div>
+                            <div class="slot-item">04:00 - 06:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Method*</label>
+                        <div style="background-color: var(--primary-light); border: 1px solid rgba(0, 71, 174, 0.15); padding: 12px; border-radius: var(--border-radius-sm); font-size: 13px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-money-bill-wave" style="color: var(--primary-color); font-size: 18px;"></i>
+                            <div>
+                                <strong>Cash on Collection</strong><br>
+                                <span style="font-size: 11px; color: var(--text-muted);">Pay Pathologist Mehul Bichpuriya via Cash or UPI/QR code at the time of sample collection.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- LIVE TRACKER TIMELINE VIEW -->
+            <div class="tracker-container" id="tracker-container">
+                <div class="tracker-title">
+                    <i class="fa-solid fa-circle-check" style="font-size: 44px; color: var(--accent-color); margin-bottom: 12px; display: block;"></i>
+                    <h3>Booking Confirmed!</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Track sample extraction status below:</p>
+                </div>
+                <div class="tracker-timeline">
+                    <div class="tracker-step" id="track-step-1">
+                        <div class="tracker-dot"><i class="fa-solid fa-check"></i></div>
+                        <h4>Appointment Confirmed</h4>
+                        <p>Order details recorded on central server</p>
+                    </div>
+                    <div class="tracker-step" id="track-step-2">
+                        <div class="tracker-dot"><i class="fa-solid fa-user-doctor"></i></div>
+                        <h4>Phlebotomist Assigned</h4>
+                        <p>Certified lab assistant designated for collection</p>
+                        
+                        <!-- Phlebotomist Contact Card -->
+                        <div class="phlebotomist-card" id="track-phleb-details" style="display: none;">
+                            <div class="phleb-avatar" style="background-color: var(--accent-color); color: white;">M</div>
+                            <div class="phleb-info">
+                                <h5>Mehul Bichpuriya</h5>
+                                <p>DMLT Certified Pathologist • 9303831588</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tracker-step" id="track-step-3">
+                        <div class="tracker-dot"><i class="fa-solid fa-vial"></i></div>
+                        <h4>Sample Extraction</h4>
+                        <p>WHO-standard home syringe extraction</p>
+                    </div>
+                    <div class="tracker-step" id="track-step-4">
+                        <div class="tracker-dot"><i class="fa-solid fa-microscope"></i></div>
+                        <h4>Lab Processing</h4>
+                        <p>Accredited diagnostic robotic processing</p>
+                    </div>
+                    <div class="tracker-step" id="track-step-5">
+                        <div class="tracker-dot"><i class="fa-solid fa-file-pdf"></i></div>
+                        <h4>Smart Report Available</h4>
+                        <p>View interactive parameters and alerts</p>
+                    </div>
+                </div>
+
+                <button class="checkout-btn" id="view-report-direct-btn" style="display: none;" onclick="viewBookingReport()">
+                    View Smart Report <i class="fa-solid fa-square-poll-vertical"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SUMMARY TOTAL SECTION -->
+        <div class="cart-summary" id="cart-summary-box" style="display: none;">
+            <div class="summary-row">
+                <span>Diagnostics Subtotal:</span>
+                <span id="sum-subtotal">₹0</span>
+            </div>
+            <div class="summary-row">
+                <span>Coupon Applied Discount:</span>
+                <span id="sum-discount">-₹0</span>
+            </div>
+            <div class="summary-row">
+                <span>Home Collection Service Charge:</span>
+                <span style="color: var(--accent-color); font-weight: 600;">FREE</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total Amount:</span>
+                <span id="sum-total">₹0</span>
+            </div>
+            <div class="cart-drawer-actions" id="cart-drawer-actions" style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn-back" id="cart-back-btn" style="display: none; flex: 1; margin: 0; padding: 12px;" onclick="prevStep()">Back</button>
+                <button class="checkout-btn" id="cart-action-btn" style="flex: 2; margin: 0; width: 100%;" onclick="handleCartAction()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: UPLOAD PRESCRIPTION -->
+    <div class="modal-overlay" id="modal-prescription">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Upload Medical Prescription</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Upload a photo of your doctor's prescription. Our certified diagnostics counselor will review it, select the exact tests needed, and call you to book.</p>
+                
+                <div class="drag-drop-area" id="prescription-drop">
+                    <i class="fa-solid fa-cloud-arrow-up drag-drop-icon"></i>
+                    <div class="drag-drop-text">Drag & Drop Prescription file here</div>
+                    <div class="drag-drop-subtext">or click to browse from device (JPG, PNG, PDF)</div>
+                    <input type="file" id="prescription-file" style="display: none;" accept="image/*,application/pdf">
+                </div>
+
+                <div class="file-selected-indicator" id="prescription-indicator">
+                    <span id="prescription-filename">No file chosen</span>
+                    <i class="fa-solid fa-circle-check" style="font-size: 16px;"></i>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="presc-name">Patient Name*</label>
+                    <input type="text" id="presc-name" placeholder="Enter patient name">
+                </div>
+                <div class="form-group">
+                    <label for="presc-phone">Contact Mobile Number*</label>
+                    <input type="tel" id="presc-phone" placeholder="10-digit number for callback">
+                </div>
+
+                <button class="checkout-btn" onclick="submitPrescription()">Submit Prescription</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: REPORT PORTAL -->
+    <div class="modal-overlay" id="modal-report-portal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3>Download Diagnostic Report</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Enter your Receipt Number or Patient ID printed on your billing receipt to download or view your digital Smart Report.</p>
+                
+                <div class="form-group">
+                    <label for="report-receipt-id">Receipt ID / Patient ID*</label>
+                    <input type="text" id="report-receipt-id" placeholder="e.g. LC-101, LC-102" style="text-transform: uppercase;">
+                    <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Hint: You can enter <strong>LC-101</strong> or <strong>LC-102</strong> to view demo reports.</p>
+                </div>
+
+                <button class="checkout-btn" onclick="lookupReport()">View Report Online</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SMART REPORT VIEWER -->
+    <div class="modal-overlay" id="modal-smart-report">
+        <div class="modal-content" style="max-width: 650px; border-radius: var(--border-radius-md);">
+            <div class="modal-header">
+                <h3>Diagnostic Smart Report</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="smart-report-container" id="smart-report-view-content">
+                <!-- Dynamically populated by app.js -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- MOBILE SIDE NAVIGATION DRAWER -->
+    <div class="cart-drawer-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+        <div class="mobile-nav-header">
+            <h3>MehulConnect Menu</h3>
+            <button class="cart-close-btn" onclick="closeMobileNav()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="mobile-nav-body">
+            <!-- User Status card on mobile -->
+            <div class="mobile-user-card" id="mobile-user-card" style="padding: 16px 20px; border-bottom: 1px solid var(--border-color); background-color: var(--bg-light);">
+                <!-- Dynamically filled by JS -->
+            </div>
+            
+            <!-- City selector inside mobile drawer -->
+            <div class="mobile-location-box" style="padding: 14px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 600; color: var(--text-dark);">
+                <span>Active Location:</span>
+                <span style="color: var(--primary-color);"><i class="fa-solid fa-location-dot"></i> Indore</span>
+            </div>
+
+            <ul class="mobile-nav-links" style="margin-top: 10px;">
+                <li class="mobile-nav-item">
+                    <a href="#" class="mobile-nav-link" onclick="closeMobileNav(); openMyBookings()">
+                        <i class="fa-solid fa-clipboard-list"></i> My Bookings
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="#" class="mobile-nav-link" onclick="closeMobileNav(); openModal('modal-prescription')">
+                        <i class="fa-solid fa-file-prescription"></i> Upload Prescription
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="#" class="mobile-nav-link" onclick="closeMobileNav(); openModal('modal-report-portal')">
+                        <i class="fa-solid fa-file-arrow-down"></i> Download Report
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="#packages" class="mobile-nav-link" onclick="closeMobileNav()">
+                        <i class="fa-solid fa-heart-pulse"></i> Swasthfit Packages
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="#tests" class="mobile-nav-link" onclick="closeMobileNav()">
+                        <i class="fa-solid fa-vials"></i> Individual Tests
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="tel:9644306633" class="mobile-nav-link">
+                        <i class="fa-solid fa-phone"></i> Call 9644306633
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- MODAL: EDIT BOOKING SLOT & INFO -->
+    <div class="modal-overlay" id="modal-edit-booking">
+        <div class="modal-content" style="max-width: 600px; border-radius: var(--border-radius-md);">
+            <div class="modal-header">
+                <h3>Edit Booking Slot & Info</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-booking-form" onsubmit="saveEditedBooking(event)">
+                    <input type="hidden" id="edit-booking-id">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Patient Name</label>
+                            <input type="text" id="edit-patient-name" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Patient Age</label>
+                            <input type="number" id="edit-patient-age" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Gender</label>
+                            <select id="edit-patient-gender" required style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px; background: white;">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Phone Number</label>
+                            <input type="tel" id="edit-patient-phone" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Collection Address</label>
+                        <textarea id="edit-patient-address" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px; min-height: 80px; resize: vertical;"></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Appointment Date</label>
+                            <input type="date" id="edit-booking-date" required style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Appointment Slot</label>
+                            <select id="edit-booking-slot" required style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px; background: white;">
+                                <option value="06:00 - 08:00 AM">06:00 - 08:00 AM</option>
+                                <option value="08:00 - 10:00 AM">08:00 - 10:00 AM</option>
+                                <option value="10:00 - 12:00 PM">10:00 - 12:00 PM</option>
+                                <option value="12:00 - 02:00 PM">12:00 - 02:00 PM</option>
+                                <option value="02:00 - 04:00 PM">02:00 - 04:00 PM</option>
+                                <option value="04:00 - 06:00 PM">04:00 - 06:00 PM</option>
+                                <option value="06:00 - 08:00 PM">06:00 - 08:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Select Tests & Packages</label>
+                        <div id="edit-items-list-container" style="max-height: 180px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; background-color: #f8fafc; display: flex; flex-direction: column; gap: 8px;">
+                            <!-- Checkboxes populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; background-color: var(--primary-light); padding: 12px; border-radius: var(--border-radius-sm); margin-bottom: 20px; border: 1px solid rgba(0, 71, 174, 0.1);">
+                        <span style="font-size: 13px; font-weight: 700; color: var(--text-dark);">Recalculated Price:</span>
+                        <span id="edit-booking-price-tag" style="font-size: 18px; font-weight: 800; color: var(--primary-color);">₹0</span>
+                    </div>
+
+                    <button type="submit" class="checkout-btn" style="width: 100%; margin: 0; background-color: var(--primary-color); color: white;">
+                        Save Changes <i class="fa-solid fa-check"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADMIN EDIT CATALOG PACKAGE -->
+    <div class="modal-overlay" id="modal-edit-admin-package">
+        <div class="modal-content" style="max-width: 550px; border-radius: var(--border-radius-md);">
+            <div class="modal-header">
+                <h3>Edit Health Package</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-admin-package-form" onsubmit="saveAdminPackage(event)">
+                    <input type="hidden" id="edit-pkg-id">
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Package Name</label>
+                        <input type="text" id="edit-pkg-name" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Price (₹)</label>
+                            <input type="number" id="edit-pkg-price" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Original Price (₹)</label>
+                            <input type="number" id="edit-pkg-origprice" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Parameters Count</label>
+                            <input type="number" id="edit-pkg-params" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Ribbon Tag (e.g. Popular)</label>
+                            <input type="text" id="edit-pkg-tag" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Tests Included (one per line)</label>
+                        <textarea id="edit-pkg-tests" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px; min-height: 120px; resize: vertical; font-family: monospace;"></textarea>
+                    </div>
+
+                    <button type="submit" class="checkout-btn" style="width: 100%; margin: 0; background-color: var(--primary-color); color: white;">
+                        Save Package Details <i class="fa-solid fa-save"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADMIN ADD CATALOG PACKAGE -->
+    <div class="modal-overlay" id="modal-add-admin-package">
+        <div class="modal-content" style="max-width: 550px; border-radius: var(--border-radius-md);">
+            <div class="modal-header">
+                <h3>Add New Health Package</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-admin-package-form" onsubmit="saveNewAdminPackage(event)">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Package Name</label>
+                        <input type="text" id="add-pkg-name" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Price (₹)</label>
+                            <input type="number" id="add-pkg-price" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Original Price (₹)</label>
+                            <input type="number" id="add-pkg-origprice" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Parameters Count</label>
+                            <input type="number" id="add-pkg-params" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Ribbon Tag (e.g. Popular)</label>
+                            <input type="text" id="add-pkg-tag" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Tests Included (one per line)</label>
+                        <textarea id="add-pkg-tests" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px; min-height: 120px; resize: vertical; font-family: monospace;"></textarea>
+                    </div>
+
+                    <button type="submit" class="checkout-btn" style="width: 100%; margin: 0; background-color: var(--primary-color); color: white;">
+                        Add Package to Catalog <i class="fa-solid fa-plus"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADMIN EDIT CATALOG TEST -->
+    <div class="modal-overlay" id="modal-edit-admin-test">
+        <div class="modal-content" style="max-width: 550px; border-radius: var(--border-radius-md);">
+            <div class="modal-header">
+                <h3>Edit Blood Test</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-admin-test-form" onsubmit="saveAdminTest(event)">
+                    <input type="hidden" id="edit-test-id">
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Test Name</label>
+                        <input type="text" id="edit-test-name" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Price (₹)</label>
+                            <input type="number" id="edit-test-price" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Test Code</label>
+                            <input type="text" id="edit-test-code" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Preparation Details</label>
+                        <input type="text" id="edit-test-prep" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Sample Type</label>
+                        <input type="text" id="edit-test-sample" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <button type="submit" class="checkout-btn" style="width: 100%; margin: 0; background-color: var(--primary-color); color: white;">
+                        Save Test Details <i class="fa-solid fa-save"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL: ADMIN ADD CATALOG TEST -->
+    <div class="modal-overlay" id="modal-add-admin-test">
+        <div class="modal-content" style="max-width: 550px; border-radius: var(--border-radius-md);">
+            <div class="modal-header">
+                <h3>Add New Blood Test</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-admin-test-form" onsubmit="saveNewAdminTest(event)">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Test Name</label>
+                        <input type="text" id="add-test-name" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Price (₹)</label>
+                            <input type="number" id="add-test-price" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Test Code</label>
+                            <input type="text" id="add-test-code" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Preparation Details</label>
+                        <input type="text" id="add-test-prep" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px;">Sample Type</label>
+                        <input type="text" id="add-test-sample" required class="search-input" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; font-size: 14px;">
+                    </div>
+
+                    <button type="submit" class="checkout-btn" style="width: 100%; margin: 0; background-color: var(--primary-color); color: white;">
+                        Add Test to Catalog <i class="fa-solid fa-plus"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PATIENT PROFILE DASHBOARD -->
+    <div class="modal-overlay" id="modal-patient-dashboard">
+        <div class="modal-content" style="max-width: 750px;">
+            <div class="modal-header">
+                <h3>Patient Portal Dashboard</h3>
+                <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="patient-dashboard-grid">
+                    <div class="patient-sidebar">
+                        <div class="patient-menu-item active" id="pmenu-profile" onclick="togglePatientTab('profile')">
+                            <i class="fa-solid fa-user-gear"></i> My Profile
+                        </div>
+                        <div class="patient-menu-item" id="pmenu-bookings" onclick="togglePatientTab('bookings')">
+                            <i class="fa-solid fa-clipboard-list"></i> Bookings History
+                        </div>
+                        <button class="patient-menu-item" style="color: var(--danger-color); margin-top: auto; border: none; background: none; width: 100%; text-align: left;" onclick="logoutCustomer()">
+                            <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                        </button>
+                    </div>
+                    <div class="patient-content">
+                        <!-- Profile Tab content -->
+                        <div class="patient-section-tab active" id="psec-profile">
+                            <h4 style="margin-bottom: 16px; border-bottom: 2px solid var(--primary-light); padding-bottom: 6px;">Profile Details</h4>
+                            <div class="form-group">
+                                <label>Patient Name</label>
+                                <p id="prof-name" style="font-weight: 700; font-size: 16px;">Mehul Sharma</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <p id="prof-email" style="font-size: 14px; color: var(--text-muted);">mehul@example.com</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Registered Mobile</label>
+                                <p id="prof-phone" style="font-size: 14px; color: var(--text-muted);">9876543210</p>
+                            </div>
+                        </div>
+
+                        <!-- Bookings Tab content -->
+                        <div class="patient-section-tab" id="psec-bookings" style="display: none;">
+                            <h4 style="margin-bottom: 16px; border-bottom: 2px solid var(--primary-light); padding-bottom: 6px;">Your Booking History</h4>
+                            <div id="patient-orders-list">
+                                <!-- Filled dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN REDIRECTED TO LOGIN.HTML -->
+
+    <!-- FULL SCREEN OVERLAY: ADMIN CONTROL WORKSPACE -->
+    <div class="admin-overlay" id="admin-workspace">
+        <div class="admin-nav">
+            <h2>MehulConnect Diagnostics Admin Portal</h2>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <span>Logged in as <strong>System Administrator</strong></span>
+                <button class="cart-btn" onclick="logoutAdmin()" style="width: auto; height: auto; border-radius: 8px; padding: 8px 16px; font-size: 14px; font-weight: 700; background-color: var(--danger-color); color: var(--bg-white);">
+                    Exit Portal <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-body">
+            <!-- Sidebar -->
+            <div class="admin-sidebar">
+                <div class="patient-menu-item active" id="amenu-bookings" onclick="toggleAdminTab('bookings')">
+                    <i class="fa-solid fa-house-chimney-medical"></i> Home Bookings
+                </div>
+                <div class="patient-menu-item" id="amenu-prescriptions" onclick="toggleAdminTab('prescriptions')">
+                    <i class="fa-solid fa-file-prescription"></i> Prescriptions
+                </div>
+                <div class="patient-menu-item" id="amenu-reports" onclick="toggleAdminTab('reports')">
+                    <i class="fa-solid fa-file-invoice"></i> Smart Report Compiler
+                </div>
+                <div class="patient-menu-item" id="amenu-catalog" onclick="toggleAdminTab('catalog')">
+                    <i class="fa-solid fa-folder-open"></i> Packages & Tests
+                </div>
+                <div class="patient-menu-item" id="amenu-customers" onclick="toggleAdminTab('customers')">
+                    <i class="fa-solid fa-users"></i> Registered Patients & Searches
+                </div>
+            </div>
+
+            <!-- Content Workspace -->
+            <div class="admin-content">
+                <!-- Bookings Management Tab -->
+                <div class="admin-section active" id="asec-bookings">
+                    <div class="admin-stats-grid">
+                        <div class="admin-stat-card">
+                            <h4>Total Scheduled Bookings</h4>
+                            <p id="astat-total">0</p>
+                        </div>
+                        <div class="admin-stat-card">
+                            <h4>Processing Samples</h4>
+                            <p id="astat-processing">0</p>
+                        </div>
+                        <div class="admin-stat-card">
+                            <h4>Pending Reports</h4>
+                            <p id="astat-pending">0</p>
+                        </div>
+                        <div class="admin-stat-card">
+                            <h4>Total Revenue Collected</h4>
+                            <p id="astat-revenue">₹0</p>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Active Patient Home Collections</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Assign phlebotomists and transition diagnostic progress timeline states below:</p>
+                        
+                        <div style="overflow-x: auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Schedule Slot</th>
+                                        <th>Test / Package Name</th>
+                                        <th>Total Paid</th>
+                                        <th>Assign Phlebotomist</th>
+                                        <th>Progress Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-bookings-rows">
+                                    <!-- Filled dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prescription Upload Management Tab -->
+                <div class="admin-section" id="asec-prescriptions">
+                    <div class="admin-card">
+                        <h3>Uploaded Prescription Files</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Review prescriber scripts uploaded by patients and mark callback confirmation status:</p>
+                        
+                        <div style="overflow-x: auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                        <th>Contact Phone</th>
+                                        <th>Prescription File</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-prescriptions-rows">
+                                    <!-- Filled dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Smart Report Compiler Tab -->
+                <div class="admin-section" id="asec-reports">
+                    <div class="admin-card" style="max-width: 600px;">
+                        <h3>Clinical Smart Report Compiler</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Dynamically generate/compile a custom digital diagnostic report parameters details for any patient booking.</p>
+                        
+                        <div class="form-group">
+                            <label for="rep-booking-id">Select Active Patient Booking*</label>
+                            <select id="rep-booking-id" class="form-group" style="padding: 10px; border-radius: 4px; border: 1px solid var(--border-color); width: 100%;">
+                                <!-- Loaded dynamically by JS -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rep-receipt-code">Custom Receipt/Report ID (e.g. LC-501)*</label>
+                            <input type="text" id="rep-receipt-code" placeholder="Enter unique ID (e.g. LC-501)">
+                        </div>
+
+                        <h4 style="margin: 20px 0 10px; color: var(--primary-color);">Lab Biomarker Results</h4>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-group">
+                                <label for="rep-val-sugar">Fasting Blood Glucose (70-100 mg/dL)</label>
+                                <input type="number" id="rep-val-sugar" placeholder="e.g. 95">
+                            </div>
+                            <div class="form-group">
+                                <label for="rep-val-hba1c">HbA1c Average Sugar (4.0-5.6 %)</label>
+                                <input type="number" id="rep-val-hba1c" step="0.1" placeholder="e.g. 5.4">
+                            </div>
+                            <div class="form-group">
+                                <label for="rep-val-chol">Total Cholesterol (100-200 mg/dL)</label>
+                                <input type="number" id="rep-val-chol" placeholder="e.g. 185">
+                            </div>
+                            <div class="form-group">
+                                <label for="rep-val-hemo">Haemoglobin (13.0-17.0 g/dL)</label>
+                                <input type="number" id="rep-val-hemo" step="0.1" placeholder="e.g. 14.5">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 16px;">
+                            <label for="rep-advice">Doctor's Recommendations & Clinical Advice*</label>
+                            <textarea id="rep-advice" placeholder="Patient shows healthy levels..." rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 16px; margin-bottom: 20px;">
+                            <label for="rep-pdf-file">Upload PDF Report Document (Optional)</label>
+                            <input type="file" id="rep-pdf-file" accept="application/pdf" style="padding: 10px; border-radius: 4px; border: 1px solid var(--border-color); width: 100%; background: var(--bg-white);">
+                        </div>
+
+                        <button class="checkout-btn" onclick="saveAdminReport()">Compile & Generate Report</button>
+                    </div>
+                </div>
+
+                <!-- Catalog Management Tab -->
+                <div class="admin-section" id="asec-catalog">
+                    <div class="admin-card">
+                        <h3>Manage Packages & Tests Catalog</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Edit details, prices, parameters, and tags for packages and blood tests:</p>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 10px;">
+                            <h4 style="margin: 0; color: var(--primary-color);">Health Packages</h4>
+                            <button class="checkout-btn" style="width: auto; padding: 6px 12px; font-size: 12px; margin: 0; background-color: var(--primary-color); color: white;" onclick="openAddAdminPackageModal()">
+                                Add New Health Package <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <div style="overflow-x: auto; margin-bottom: 30px;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Package Name</th>
+                                        <th>Price (₹)</th>
+                                        <th>Original Price (₹)</th>
+                                        <th>Parameters</th>
+                                        <th>Tag</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-packages-rows">
+                                    <!-- Filled dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 10px;">
+                            <h4 style="margin: 0; color: var(--primary-color);">Individual Blood Tests</h4>
+                            <button class="checkout-btn" style="width: auto; padding: 6px 12px; font-size: 12px; margin: 0; background-color: var(--primary-color); color: white;" onclick="openAddAdminTestModal()">
+                                Add New Blood Test <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Test Name</th>
+                                        <th>Price (₹)</th>
+                                        <th>Code</th>
+                                        <th>Preparation</th>
+                                        <th>Sample Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-tests-rows">
+                                    <!-- Filled dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registered Patients & Searches Tab -->
+                <div class="admin-section" id="asec-customers">
+                    <div class="admin-card" style="margin-bottom: 30px;">
+                        <h3>Registered Customer Accounts</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Detailed list of registered customer accounts, their contact details, credentials, and recent searches:</p>
+                        <div style="overflow-x: auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Password Hint</th>
+                                        <th>Recent Searches</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-customers-rows">
+                                    <!-- Filled dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Chronological Guest & Customer Search Logs</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Chronological tracking of search terms query entries made on the website:</p>
+                        <div style="overflow-x: auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>User/Visitor</th>
+                                        <th>Search Keyword</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-searches-rows">
+                                    <!-- Filled dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CORE JS LOGIC -->
+    <script src="app.js"></script>
+</body>
+</html>

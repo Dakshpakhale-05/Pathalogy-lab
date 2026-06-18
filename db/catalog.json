@@ -1,0 +1,112 @@
+{
+  "packages": [
+    {
+      "id": "SF-01",
+      "name": "Swasthfit Super Active Full Body Checkup",
+      "tag": "Popular Package",
+      "parameters": 82,
+      "price": 1499,
+      "originalPrice": 2999,
+      "tests": [
+        "Complete Blood Count (CBC) - 24 parameters",
+        "Lipid Profile (Cholesterol, HDL, LDL, Triglycerides)",
+        "Liver Function Test (LFT) - 11 parameters",
+        "Kidney Function Test (KFT) - 8 parameters",
+        "Thyroid Profile (T3, T4, TSH)",
+        "HbA1c (Average Blood Sugar)",
+        "Vitamin D & Vitamin B12",
+        "Urine Routine Analysis - 18 parameters"
+      ]
+    },
+    {
+      "id": "SF-02",
+      "name": "Swasthfit Complete Care Package",
+      "tag": "Essential Care",
+      "parameters": 56,
+      "price": 999,
+      "originalPrice": 1999,
+      "tests": [
+        "Complete Blood Count (CBC)",
+        "Diabetes Screening (Fasting Blood Sugar)",
+        "Cholesterol Profile",
+        "Kidney Panel (Urea, Creatinine)",
+        "Thyroid Profile (TSH)",
+        "Urine Routine Analysis"
+      ]
+    },
+    {
+      "id": "SF-03",
+      "name": "Senior Citizen Advanced Health Package",
+      "tag": "Specialized Care",
+      "parameters": 74,
+      "price": 1999,
+      "originalPrice": 3999,
+      "tests": [
+        "Complete Blood Count (CBC)",
+        "Lipid Profile (Heart Risk Assessment)",
+        "Liver Function Panel",
+        "Kidney Function Panel",
+        "HbA1c & Fasting Glucose",
+        "Rheumatoid Factor (RA) & Bone Health",
+        "Calcium & Uric Acid",
+        "PSA (For Men) / Thyroid Profile (For Women)"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "id": "T-01",
+      "name": "Complete Blood Count (CBC)",
+      "code": "CBC",
+      "prep": "No fasting required",
+      "sample": "Blood (EDTA)",
+      "time": "12 Hours",
+      "price": 349
+    },
+    {
+      "id": "T-02",
+      "name": "Thyroid Profile (T3, T4, TSH)",
+      "code": "THYROID",
+      "prep": "Fasting preferred but not mandatory",
+      "sample": "Blood (Serum)",
+      "time": "12 Hours",
+      "price": 499
+    },
+    {
+      "id": "T-03",
+      "name": "HbA1c (Glycated Haemoglobin)",
+      "code": "HBA1C",
+      "prep": "No fasting required",
+      "sample": "Blood (EDTA)",
+      "time": "12 Hours",
+      "price": 399
+    },
+    {
+      "id": "T-04",
+      "name": "Lipid Profile (Cholesterol Panel)",
+      "code": "LIPID",
+      "prep": "10-12 hours fasting mandatory",
+      "sample": "Blood (Serum)",
+      "time": "12 Hours",
+      "price": 549
+    },
+    {
+      "id": "T-05",
+      "name": "Vitamin D (25-Hydroxy)",
+      "code": "VITD",
+      "prep": "No fasting required",
+      "sample": "Blood (Serum)",
+      "time": "24 Hours",
+      "price": 699
+    },
+    {
+      "id": "T-06",
+      "name": "Diabetes Screening (Fasting & PP)",
+      "code": "DIABETES",
+      "prep": "Fasting (8-10 hrs) & 2 hrs Post Meal samples",
+      "sample": "Blood (Sodium Fluoride)",
+      "time": "12 Hours",
+      "price": 249
+    }
+  ]
+}

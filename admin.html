@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MehulConnect | Admin & Pathologist Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 71, 174, 0.06) 0%, rgba(0, 168, 150, 0.06) 90.1%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ambient background floating blobs */
+        .ambient-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 1;
+            opacity: 0.5;
+            animation: float-around 20s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            width: 350px;
+            height: 350px;
+            background-color: var(--primary-color);
+            top: -70px;
+            left: -70px;
+        }
+
+        .blob-2 {
+            width: 350px;
+            height: 350px;
+            background-color: var(--accent-color);
+            bottom: -70px;
+            right: -70px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-around {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 30px) scale(1.1); }
+        }
+
+        .back-home {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--primary-color);
+            background-color: var(--bg-white);
+            padding: 10px 18px;
+            border-radius: 50px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+        .back-home:hover {
+            transform: translateX(-4px);
+            color: var(--accent-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .auth-card {
+            width: 500px;
+            max-width: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            z-index: 5;
+            position: relative;
+            padding: 50px 40px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header a {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .auth-header h3 {
+            font-size: 22px;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .auth-header p.subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .alert-box {
+            padding: 12px 16px;
+            border-radius: var(--border-radius-sm);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        .alert-box.error {
+            display: flex;
+            background-color: var(--danger-light);
+            color: var(--danger-color);
+            border: 1px solid rgba(230, 57, 70, 0.15);
+        }
+        .alert-box.success {
+            display: flex;
+            background-color: var(--accent-light);
+            color: var(--accent-color);
+            border: 1px solid rgba(0, 168, 150, 0.15);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            font-weight: 700;
+            padding: 14px;
+            border-radius: var(--border-radius-sm);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(0, 71, 174, 0.15);
+        }
+        .btn-submit:hover {
+            background-color: #00388a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 71, 174, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <!-- Ambient shapes -->
+        <div class="ambient-blob blob-1"></div>
+        <div class="ambient-blob blob-2"></div>
+
+        <!-- Back Link -->
+        <a href="/" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <a href="/">
+                    <i class="fa-solid fa-microscope" style="color: var(--accent-color);"></i> Mehul<span style="color: var(--secondary-color);">Connect</span>
+                </a>
+                <h3>Admin & Pathologist Portal</h3>
+                <p class="subtitle">Secure authentication console for laboratory operations and compilation.</p>
+            </div>
+
+            <!-- Global Alert Box -->
+            <div class="alert-box" id="auth-alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="alert-text">Error message text</span>
+            </div>
+
+            <!-- PANEL 1: ADMIN LOGIN -->
+            <div id="panel-login">
+                <form onsubmit="handleAdminLogin(event)">
+                    <div class="form-group">
+                        <label for="admin-identity">Email or Phone Number*</label>
+                        <input type="text" id="admin-identity" placeholder="Enter administrator email or phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-pass">Password*</label>
+                        <input type="password" id="admin-pass" placeholder="••••••••" required>
+                    </div>
+                    <div style="text-align: right; margin-top: 6px; margin-bottom: 15px;">
+                        <a href="#" onclick="showForgotPasswordPanel(event)" style="font-size: 13px; color: var(--primary-color); font-weight: 600; text-decoration: none;">Forgot Password?</a>
+                    </div>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px; text-align: center;">
+                        Hint: Login with Email <strong>909mehulbichpuriya@gmail.com</strong> or Phone <strong>9644306633</strong>.
+                    </p>
+                    <button type="submit" class="btn-submit">
+                        Login as Administrator <i class="fa-solid fa-lock-open"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- PANEL 2: ADMIN RESET PASSWORD -->
+            <div id="panel-forgot" style="display: none;">
+                <h3 style="font-size: 20px; color: var(--text-dark); margin-bottom: 8px; text-align: center;">Reset Admin Password</h3>
+                <p class="subtitle" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; text-align: center;">Enter your registered Administrator Email or Phone and a New Password to update it.</p>
+                <form onsubmit="handleResetPassword(event)">
+                    <div class="form-group">
+                        <label for="reset-identity">Registered Email or Phone Number*</label>
+                        <input type="text" id="reset-identity" placeholder="909mehulbichpuriya@gmail.com or 9644306633" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reset-pass">New Password*</label>
+                        <input type="password" id="reset-pass" placeholder="Enter new password" required minlength="4">
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        Update Admin Password <i class="fa-solid fa-lock"></i>
+                    </button>
+                    <div style="text-align: center; margin-top: 18px;">
+                        <a href="#" onclick="showLoginPanel(event)" style="font-size: 13px; color: var(--primary-color); font-weight: 600; text-decoration: none;">Back to Sign In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper to show errors
+        function showAlert(message, type = 'error') {
+            const alertBox = document.getElementById('auth-alert');
+            const alertText = document.getElementById('alert-text');
+            alertText.innerText = message;
+            alertBox.className = `alert-box ${type}`;
+            
+            // Adjust icon
+            const icon = alertBox.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fa-solid fa-circle-check';
+            } else {
+                icon.className = 'fa-solid fa-circle-exclamation';
+            }
+        }
+
+        function showForgotPasswordPanel(e) {
+            if (e) e.preventDefault();
+            document.getElementById('panel-login').style.display = 'none';
+            document.getElementById('panel-forgot').style.display = 'block';
+            document.getElementById('auth-alert').style.display = 'none';
+        }
+
+        function showLoginPanel(e) {
+            if (e) e.preventDefault();
+            document.getElementById('panel-login').style.display = 'block';
+            document.getElementById('panel-forgot').style.display = 'none';
+            document.getElementById('auth-alert').style.display = 'none';
+        }
+
+        // Handle Admin Login
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const identity = document.getElementById('admin-identity').value.trim();
+            const pass = document.getElementById('admin-pass').value;
+
+            try {
+                const response = await fetch('/api/auth/admin-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ identity, pass })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    showAlert('Admin authenticated! Opening dashboard...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    showAlert(data.error || 'Invalid administrator username or password.', 'error');
+                }
+            } catch (err) {
+                showAlert('Error connecting to server. Please try again.', 'error');
+            }
+        }
+
+        async function handleResetPassword(e) {
+            e.preventDefault();
+            const identity = document.getElementById('reset-identity').value.trim();
+            const newPass = document.getElementById('reset-pass').value;
+
+            // Restrict admin reset password to only the official admin accounts
+            const adminEmail = '909mehulbichpuriya@gmail.com';
+            const adminPhone = '9644306633';
+
+            if (identity.toLowerCase() !== adminEmail.toLowerCase() && identity !== adminPhone) {
+                showAlert('Access denied. You can only reset password for the administrator account.', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/reset', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ identity, newPass })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Reset failed');
+                }
+
+                showAlert('Administrator password updated successfully! You can now log in.', 'success');
+                
+                setTimeout(() => {
+                    showLoginPanel();
+                }, 1500);
+
+            } catch (error) {
+                showAlert(error.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
