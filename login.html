@@ -277,6 +277,101 @@
                 padding: 40px 30px;
             }
         }
+
+        /* SMS Notification Banner styling */
+        .sms-notification-banner {
+            position: fixed;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            max-width: 90%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: #ffffff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .sms-notification-banner.show {
+            top: 24px;
+        }
+
+        .sms-banner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 6px;
+        }
+
+        .sms-banner-header span {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        .sms-banner-body {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .sms-banner-body strong {
+            color: var(--secondary-color);
+            font-size: 15px;
+            font-weight: 800;
+            background: rgba(255, 199, 44, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px dashed rgba(255, 199, 44, 0.3);
+        }
+
+        /* OTP Input Field */
+        .otp-input-large {
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 10px;
+            font-weight: 800;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            width: 100%;
+            margin: 10px 0;
+            text-indent: 10px; /* Offset the letter-spacing on the last char */
+            transition: var(--transition);
+        }
+
+        .otp-input-large:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(0, 71, 174, 0.1);
+            outline: none;
+        }
+
+        .simulation-badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            border: 1px solid rgba(0, 71, 174, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -331,138 +426,160 @@
             </div>
 
             <!-- Forms Right -->
-            <div class="auth-form-side">
-                <!-- Tab Controls -->
-                <div class="auth-tabs">
-                    <div class="auth-tab active" id="tab-login" onclick="toggleTab('login')">Patient Sign In</div>
-                    <div class="auth-tab" id="tab-register" onclick="toggleTab('register')">Create Account</div>
-                </div>
-
+            <div class="auth-form-side" style="justify-content: center;">
                 <!-- Global Alert Box -->
                 <div class="alert-box" id="auth-alert">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span id="alert-text">Error message text</span>
                 </div>
 
-                <!-- PANEL 1: PATIENT LOGIN -->
-                <div class="auth-form-panel active" id="panel-login">
-                    <h3>Welcome Back</h3>
-                    <p class="subtitle">Log in to view your profile dashboard and download reports.</p>
+                <!-- STATE A: ENTER DETAILS -->
+                <div class="auth-form-panel active" id="otp-details-panel">
+                    <div class="simulation-badge"><i class="fa-solid fa-flask-vial"></i> Passwordless OTP Authentication</div>
+                    <h3>Patient Sign In / Register</h3>
+                    <p class="subtitle">Enter your name and phone number to log in or create an account instantly. No password required.</p>
                     
-                    <form onsubmit="handleCustomerLogin(event)">
-                        <div class="form-group">
-                            <label for="login-email">Email Address or Phone Number*</label>
-                            <input type="text" id="login-email" placeholder="name@example.com or phone number" required>
+                    <form onsubmit="handleSendOTP(event)">
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label for="patient-name">Full Name*</label>
+                            <input type="text" id="patient-name" placeholder="Enter your full name" required>
                         </div>
-                        <div class="form-group">
-                            <label for="login-pass">Password*</label>
-                            <input type="password" id="login-pass" placeholder="••••••••" required>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label for="patient-phone">Phone Number*</label>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <span style="position: absolute; left: 14px; font-weight: 600; color: var(--text-muted); font-size: 14px; border-right: 1px solid var(--border-color); padding-right: 10px;">+91</span>
+                                <input type="tel" id="patient-phone" placeholder="10-digit mobile number" required pattern="[0-9]{10}" style="padding-left: 60px; width: 100%;">
+                            </div>
                         </div>
-                        <div style="text-align: right; margin-top: 6px; margin-bottom: 15px;">
-                            <a href="#" onclick="showForgotPasswordPanel(event)" style="font-size: 13px; color: var(--primary-color); font-weight: 600; text-decoration: none;">Forgot Password?</a>
-                        </div>
-                        <button type="submit" class="btn-submit">
-                            Sign In <i class="fa-solid fa-right-to-bracket"></i>
+                        <button type="submit" class="btn-submit" id="btn-send-otp">
+                            Get OTP via SMS <i class="fa-solid fa-paper-plane"></i>
                         </button>
                     </form>
                 </div>
 
-                <!-- PANEL 2: PATIENT REGISTER -->
-                <div class="auth-form-panel" id="panel-register">
-                    <h3>Create Patient Account</h3>
-                    <p class="subtitle">Sign up to schedule home collections and save booking histories.</p>
+                <!-- STATE B: VERIFY OTP -->
+                <div class="auth-form-panel" id="otp-verify-panel">
+                    <div class="simulation-badge" style="background-color: var(--accent-light); color: var(--accent-color); border-color: rgba(0, 168, 150, 0.1);"><i class="fa-solid fa-envelope-open-text"></i> Verification Code Sent</div>
+                    <h3>Enter Verification Code</h3>
+                    <p class="subtitle" style="margin-bottom: 15px;">We have sent a 6-digit One-Time Password (OTP) via SMS to <strong id="display-phone" style="color: var(--text-dark);">+91 9999999999</strong>.</p>
                     
-                    <form onsubmit="handleCustomerRegister(event)">
-                        <div class="form-group">
-                            <label for="reg-name">Full Name*</label>
-                            <input type="text" id="reg-name" placeholder="Enter your full name" required>
+                    <form onsubmit="handleVerifyOTP(event)">
+                        <div class="form-group" style="margin-bottom: 15px; text-align: center;">
+                            <label for="otp-code" style="text-align: left; display: block; margin-bottom: 6px;">6-Digit OTP Code*</label>
+                            <input type="text" id="otp-code" class="otp-input-large" placeholder="••••••" required maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code">
+                            <span id="simulation-otp-helper" style="font-size: 12px; color: var(--text-muted); display: block; margin-top: 8px;">
+                                <i class="fa-solid fa-circle-info"></i> Waiting for simulated SMS...
+                            </span>
                         </div>
-                        <div class="form-group">
-                            <label for="reg-email">Email Address*</label>
-                            <input type="email" id="reg-email" placeholder="name@example.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-phone">Phone Number*</label>
-                            <input type="tel" id="reg-phone" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-pass">Password*</label>
-                            <input type="password" id="reg-pass" placeholder="Create a strong password" required minlength="4">
-                        </div>
-                        <button type="submit" class="btn-submit">
-                            Register Account <i class="fa-solid fa-user-plus"></i>
+                        <button type="submit" class="btn-submit" id="btn-verify-otp">
+                            Verify & Sign In <i class="fa-solid fa-circle-check"></i>
                         </button>
-                    </form>
-                </div>
-
-                <!-- PANEL 3: RESET PASSWORD -->
-                <div class="auth-form-panel" id="panel-forgot">
-                    <h3>Reset Password</h3>
-                    <p class="subtitle">Enter your registered Email or Phone and a New Password to update it.</p>
-                    
-                    <form onsubmit="handleResetPassword(event)">
-                        <div class="form-group">
-                            <label for="reset-identity">Email Address or Phone Number*</label>
-                            <input type="text" id="reset-identity" placeholder="name@example.com or phone number" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reset-pass">New Password*</label>
-                            <input type="password" id="reset-pass" placeholder="Enter new password" required minlength="4">
-                        </div>
-                        <button type="submit" class="btn-submit">
-                            Update Password <i class="fa-solid fa-lock"></i>
-                        </button>
-                        <div style="text-align: center; margin-top: 18px;">
-                            <a href="#" onclick="showLoginPanel(event)" style="font-size: 13px; color: var(--primary-color); font-weight: 600; text-decoration: none;">Back to Sign In</a>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <a href="#" onclick="goBackToDetails(event)" style="font-size: 13.5px; color: var(--primary-color); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                <i class="fa-solid fa-arrow-left"></i> Change Name or Phone
+                            </a>
                         </div>
                     </form>
                 </div>
-
-
-
             </div>
         </div>
     </div>
 
     <script>
+        let activePhone = '';
+        let activeName = '';
 
+        // Helper to play smartphone-style dual tone notification sound
+        function playNotificationSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Tone 1: D5
+                const osc1 = audioCtx.createOscillator();
+                const gain1 = audioCtx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+                gain1.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain1.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start();
+                osc1.stop(audioCtx.currentTime + 0.35);
 
-        // Tab Switching
-        function toggleTab(tabId) {
-            // Reset alert box
-            const alertBox = document.getElementById('auth-alert');
-            alertBox.style.display = 'none';
-
-            // Reset tab classes
-            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.auth-form-panel').forEach(panel => panel.classList.remove('active'));
-
-            // Set active
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            document.getElementById(`panel-${tabId}`).classList.add('active');
+                // Tone 2: A5 slightly delayed
+                setTimeout(() => {
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(880, audioCtx.currentTime);
+                    gain2.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.45);
+                    osc2.connect(gain2);
+                    gain2.connect(audioCtx.destination);
+                    osc2.start();
+                    osc2.stop(audioCtx.currentTime + 0.45);
+                }, 75);
+            } catch (e) {
+                console.log('AudioContext blocked or not supported:', e);
+            }
         }
 
-        function showForgotPasswordPanel(e) {
-            if (e) e.preventDefault();
-            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.auth-form-panel').forEach(panel => panel.classList.remove('active'));
-            document.getElementById('panel-forgot').classList.add('active');
-            document.getElementById('auth-alert').style.display = 'none';
+        // Helper to show iOS/Android styled simulated SMS banner notification
+        function showSMSNotification(phone, otp) {
+            playNotificationSound();
+
+            let existingBanner = document.getElementById('simulated-sms-banner');
+            if (existingBanner) {
+                existingBanner.remove();
+            }
+
+            const banner = document.createElement('div');
+            banner.id = 'simulated-sms-banner';
+            banner.className = 'sms-notification-banner';
+            banner.innerHTML = `
+                <div class="sms-banner-header">
+                    <span><i class="fa-solid fa-comment-sms"></i> MESSAGES • NOW</span>
+                    <span>AccuraPath Lab</span>
+                </div>
+                <div class="sms-banner-body">
+                    Your secure OTP for AccuraPath Lab login is <strong>${otp}</strong>. Valid for 5 minutes. Do not share this code.
+                </div>
+            `;
+
+            document.body.appendChild(banner);
+
+            setTimeout(() => {
+                banner.classList.add('show');
+            }, 100);
+
+            // Clicking the banner auto-fills the OTP and dismisses the banner
+            banner.addEventListener('click', () => {
+                const otpInput = document.getElementById('otp-code');
+                if (otpInput) {
+                    otpInput.value = otp;
+                    showAlert('OTP copied from simulated SMS!', 'success');
+                }
+                dismissBanner();
+            });
+
+            let dismissTimeout = setTimeout(dismissBanner, 12000);
+
+            function dismissBanner() {
+                banner.classList.remove('show');
+                setTimeout(() => {
+                    banner.remove();
+                }, 600);
+                clearTimeout(dismissTimeout);
+            }
         }
 
-        function showLoginPanel(e) {
-            if (e) e.preventDefault();
-            toggleTab('login');
-        }
-
-        // Helper to show errors
+        // Helper to show errors/success alerts
         function showAlert(message, type = 'error') {
             const alertBox = document.getElementById('auth-alert');
             const alertText = document.getElementById('alert-text');
             alertText.innerText = message;
             alertBox.className = `alert-box ${type}`;
             
-            // Adjust icon
             const icon = alertBox.querySelector('i');
             if (type === 'success') {
                 icon.className = 'fa-solid fa-circle-check';
@@ -471,65 +588,95 @@
             }
         }
 
-        // Handle Customer Login
-        async function handleCustomerLogin(e) {
+        // Send OTP Request
+        async function handleSendOTP(e) {
             e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
-            const pass = document.getElementById('login-pass').value;
+            const name = document.getElementById('patient-name').value.trim();
+            const phone = document.getElementById('patient-phone').value.trim();
+
+            if (!name || !phone) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btn-send-otp');
+            btn.disabled = true;
+            btn.innerHTML = 'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
 
             try {
-                const response = await fetch('/api/auth/login', {
+                const response = await fetch('/api/auth/send-otp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, pass })
+                    body: JSON.stringify({ name, phone })
                 });
 
                 const data = await response.json();
                 if (!response.ok) {
-                    throw new Error(data.error || 'Login failed');
+                    throw new Error(data.error || 'Failed to send OTP');
                 }
 
-                // Save session in local storage
-                localStorage.setItem('currentUser', JSON.stringify(data.user));
-                showAlert('Login successful! Redirecting...', 'success');
+                activePhone = phone;
+                activeName = name;
+
+                // Toggle panels
+                document.getElementById('otp-details-panel').classList.remove('active');
+                document.getElementById('otp-verify-panel').classList.add('active');
+                document.getElementById('display-phone').innerText = `+91 ${phone.substring(0, 5)} ${phone.substring(5)}`;
                 
+                document.getElementById('otp-code').value = '';
+                document.getElementById('otp-code').focus();
+                
+                // Update helper click-to-fill option
+                document.getElementById('simulation-otp-helper').innerHTML = `
+                    <i class="fa-solid fa-circle-info"></i> Simulated SMS sent. Use OTP: <strong style="color: var(--primary-color); cursor: pointer;" onclick="document.getElementById('otp-code').value='${data.otp}'">${data.otp}</strong> (Click to fill)
+                `;
+
+                // Fire simulated SMS banner
                 setTimeout(() => {
-                    window.location.href = '/';
-                }, 1000);
+                    showSMSNotification(phone, data.otp);
+                }, 800);
+
+                showAlert('Verification OTP sent successfully via simulated SMS!', 'success');
 
             } catch (error) {
-                // Check if they tried admin credentials in customer tab
-                if (email.toLowerCase() === 'admin') {
-                    showAlert('To login as administrator, please click the "Admin Portal" tab above.', 'error');
-                } else {
-                    showAlert(error.message, 'error');
-                }
+                showAlert(error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Get OTP via SMS <i class="fa-solid fa-paper-plane"></i>';
             }
         }
 
-        // Handle Customer Registration
-        async function handleCustomerRegister(e) {
+        // Verify OTP and Log in
+        async function handleVerifyOTP(e) {
             e.preventDefault();
-            const name = document.getElementById('reg-name').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
-            const phone = document.getElementById('reg-phone').value.trim();
-            const pass = document.getElementById('reg-pass').value;
+            const otp = document.getElementById('otp-code').value.trim();
+
+            if (!otp || otp.length !== 6) {
+                showAlert('Please enter the 6-digit OTP code', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btn-verify-otp');
+            btn.disabled = true;
+            btn.innerHTML = 'Verifying... <i class="fa-solid fa-spinner fa-spin"></i>';
 
             try {
-                const response = await fetch('/api/auth/register', {
+                const response = await fetch('/api/auth/verify-otp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, phone, pass })
+                    body: JSON.stringify({ phone: activePhone, otp })
                 });
 
                 const data = await response.json();
                 if (!response.ok) {
-                    throw new Error(data.error || 'Registration failed');
+                    throw new Error(data.error || 'Verification failed');
                 }
 
-                // Auto login after registration
                 localStorage.setItem('currentUser', JSON.stringify(data.user));
-                showAlert('Account created successfully! Redirecting...', 'success');
+                showAlert('Authentication successful! Redirecting...', 'success');
+                
+                activePhone = '';
+                activeName = '';
 
                 setTimeout(() => {
                     window.location.href = '/';
@@ -537,35 +684,23 @@
 
             } catch (error) {
                 showAlert(error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Verify & Sign In <i class="fa-solid fa-circle-check"></i>';
             }
         }
 
-        async function handleResetPassword(e) {
-            e.preventDefault();
-            const identity = document.getElementById('reset-identity').value.trim();
-            const newPass = document.getElementById('reset-pass').value;
-
-            try {
-                const response = await fetch('/api/auth/reset', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ identity, newPass })
-                });
-
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Reset failed');
-                }
-
-                showAlert('Password updated successfully! You can now log in.', 'success');
-                
-                setTimeout(() => {
-                    showLoginPanel();
-                }, 1500);
-
-            } catch (error) {
-                showAlert(error.message, 'error');
-            }
+        // Back to Start State
+        function goBackToDetails(e) {
+            if (e) e.preventDefault();
+            
+            document.getElementById('otp-verify-panel').classList.remove('active');
+            document.getElementById('otp-details-panel').classList.add('active');
+            
+            document.getElementById('patient-name').value = activeName;
+            document.getElementById('patient-phone').value = activePhone;
+            
+            document.getElementById('auth-alert').style.display = 'none';
         }
     </script>
 </body>
