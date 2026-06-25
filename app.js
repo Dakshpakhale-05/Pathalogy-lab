@@ -1339,11 +1339,7 @@ async function loadPatientDashboard() {
                             <button class="checkout-btn" style="margin-top: 10px; padding: 6px; font-size: 12px; background-color: #f59e0b; color: white;" onclick="editThisBooking('${b.id}')">
                                 Edit <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                        ` : `
-                            <button class="checkout-btn" style="margin-top: 10px; padding: 6px; font-size: 12px; background-color: var(--accent-color); color: white;" onclick="trackThisBooking('${b.id}')">
-                                View Smart Report <i class="fa-solid fa-square-poll-vertical"></i>
-                            </button>
-                        `}
+                        ` : ''}
                 </div>
             `;
         }).join('');
