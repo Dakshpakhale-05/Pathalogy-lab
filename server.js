@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -72,7 +73,7 @@ function writeDb(filePath, content) {
 // ==========================================
 
 // 1. AUTHENTICATION
-app.post('/api/auth/register', (req, res) => {
+app.post('/api/auth/register', async (req, res) => {
     const { name, email, phone, pass } = req.body;
     if (!name || !email || !phone || !pass) {
         return res.status(400).json({ error: 'All fields are required' });
@@ -83,36 +84,84 @@ app.post('/api/auth/register', (req, res) => {
         return res.status(400).json({ error: 'Email is already registered' });
     }
 
-    const newUser = { name, email, phone, pass };
-    users.push(newUser);
-    writeDb(USERS_PATH, users);
+    try {
+        // Hash password before saving
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(pass, salt);
 
-    res.status(201).json({ message: 'Registration successful', user: { name, email, phone } });
+        const newUser = { name, email, phone, pass: hashedPassword };
+        users.push(newUser);
+        writeDb(USERS_PATH, users);
+
+        res.status(201).json({ message: 'Registration successful', user: { name, email, phone } });
+    } catch (error) {
+        console.error('Registration hashing error:', error);
+        res.status(500).json({ error: 'Internal server error during account creation' });
+    }
 });
 
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
     const { email, pass } = req.body;
     if (!email || !pass) {
         return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const users = readDb(USERS_PATH);
-    const matchedUser = users.find(u => 
-        (u.email.toLowerCase() === email.toLowerCase() || u.phone === email) && 
-        u.pass === pass
-    );
+    try {
+        const users = readDb(USERS_PATH);
+        const matchedUser = users.find(u => 
+            (u.email.toLowerCase() === email.toLowerCase() || u.phone === email)
+        );
 
-    if (!matchedUser) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+        if (!matchedUser) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        // Check password (supports both bcrypt hash and plain-text fallback)
+        let isMatch = false;
+        let needsUpgrade = false;
+
+        const isBcryptHash = matchedUser.pass.startsWith('$2a$') || matchedUser.pass.startsWith('$2b$');
+
+        if (isBcryptHash) {
+            isMatch = await bcrypt.compare(pass, matchedUser.pass);
+        } else {
+            // Plain text fallback for old accounts
+            isMatch = (matchedUser.pass === pass);
+            if (isMatch) {
+                needsUpgrade = true; // Mark to upgrade to hash on next write
+            }
+        }
+
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        // Upgrade plain-text password to secure Bcrypt hash on the fly
+        if (needsUpgrade) {
+            try {
+                const userIndex = users.findIndex(u => u.phone === matchedUser.phone);
+                if (userIndex !== -1) {
+                    const salt = await bcrypt.genSalt(10);
+                    users[userIndex].pass = await bcrypt.hash(pass, salt);
+                    writeDb(USERS_PATH, users);
+                    console.log(`[SECURITY] Automatically upgraded plain-text password to Bcrypt hash for user: ${matchedUser.phone}`);
+                }
+            } catch (upgradeErr) {
+                console.error('Failed to upgrade password hash:', upgradeErr);
+            }
+        }
+
+        res.status(200).json({
+            message: 'Login successful',
+            user: { name: matchedUser.name, email: matchedUser.email, phone: matchedUser.phone }
+        });
+    } catch (error) {
+        console.error('Login processing error:', error);
+        res.status(500).json({ error: 'Internal server error during authentication' });
     }
-
-    res.status(200).json({
-        message: 'Login successful',
-        user: { name: matchedUser.name, email: matchedUser.email, phone: matchedUser.phone }
-    });
 });
 
-app.post('/api/auth/reset', (req, res) => {
+app.post('/api/auth/reset', async (req, res) => {
     const { identity, newPass } = req.body;
     if (!identity || !newPass) {
         return res.status(400).json({ error: 'Email/Phone and New Password are required' });
@@ -128,14 +177,22 @@ app.post('/api/auth/reset', (req, res) => {
         return res.status(404).json({ error: 'No account found with this Email or Phone Number' });
     }
 
-    // Update password
-    users[userIndex].pass = newPass;
-    writeDb(USERS_PATH, users);
+    try {
+        // Securely hash the new password before storing it
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPass, salt);
 
-    res.status(200).json({ message: 'Password reset successful' });
+        users[userIndex].pass = hashedPassword;
+        writeDb(USERS_PATH, users);
+
+        res.status(200).json({ message: 'Password reset successful' });
+    } catch (error) {
+        console.error('Password reset hashing error:', error);
+        res.status(500).json({ error: 'Internal server error during password update' });
+    }
 });
 
-app.post('/api/auth/admin-login', (req, res) => {
+app.post('/api/auth/admin-login', async (req, res) => {
     const { identity, pass } = req.body;
     if (!identity || !pass) {
         return res.status(400).json({ error: 'Email/Phone and Password are required' });
@@ -148,17 +205,55 @@ app.post('/api/auth/admin-login', (req, res) => {
         return res.status(401).json({ error: 'Access denied. Only the administrator account can log in here.' });
     }
 
-    const users = readDb(USERS_PATH);
-    const adminUser = users.find(u => 
-        (u.email.toLowerCase() === adminEmail.toLowerCase() || u.phone === adminPhone) && 
-        u.pass === pass
-    );
+    try {
+        const users = readDb(USERS_PATH);
+        const adminUser = users.find(u => 
+            (u.email.toLowerCase() === adminEmail.toLowerCase() || u.phone === adminPhone)
+        );
 
-    if (!adminUser) {
-        return res.status(401).json({ error: 'Invalid password.' });
+        if (!adminUser) {
+            return res.status(401).json({ error: 'Invalid password.' });
+        }
+
+        let isMatch = false;
+        let needsUpgrade = false;
+
+        const isBcryptHash = adminUser.pass.startsWith('$2a$') || adminUser.pass.startsWith('$2b$');
+
+        if (isBcryptHash) {
+            isMatch = await bcrypt.compare(pass, adminUser.pass);
+        } else {
+            // Plain text fallback for old accounts
+            isMatch = (adminUser.pass === pass);
+            if (isMatch) {
+                needsUpgrade = true;
+            }
+        }
+
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid password.' });
+        }
+
+        // Securely upgrade admin password on the fly if still plain text
+        if (needsUpgrade) {
+            try {
+                const userIndex = users.findIndex(u => u.phone === adminUser.phone);
+                if (userIndex !== -1) {
+                    const salt = await bcrypt.genSalt(10);
+                    users[userIndex].pass = await bcrypt.hash(pass, salt);
+                    writeDb(USERS_PATH, users);
+                    console.log(`[SECURITY] Automatically upgraded admin password to Bcrypt hash.`);
+                }
+            } catch (upgradeErr) {
+                console.error('Failed to upgrade admin password hash:', upgradeErr);
+            }
+        }
+
+        res.status(200).json({ message: 'Admin login successful' });
+    } catch (error) {
+        console.error('Admin login processing error:', error);
+        res.status(500).json({ error: 'Internal server error during administrator authentication' });
     }
-
-    res.status(200).json({ message: 'Admin login successful' });
 });
 
 // 2. BOOKINGS
