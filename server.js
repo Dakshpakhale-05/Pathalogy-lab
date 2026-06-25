@@ -43,9 +43,6 @@ const REPORTS_PATH = path.join(__dirname, 'db', 'reports.json');
 const CATALOG_PATH = path.join(__dirname, 'db', 'catalog.json');
 const SEARCHES_PATH = path.join(__dirname, 'db', 'searches.json');
 
-// In-memory OTP storage (phone -> { otp, name, timestamp })
-const otpStore = {};
-
 // Helper functions for reading/writing database JSON files
 function readDb(filePath) {
     try {
@@ -75,89 +72,6 @@ function writeDb(filePath, content) {
 // ==========================================
 
 // 1. AUTHENTICATION
-
-// OTP-Based Authentication for Patients
-app.post('/api/auth/send-otp', (req, res) => {
-    const { name, phone } = req.body;
-    if (!name || !phone) {
-        return res.status(400).json({ error: 'Name and Phone Number are required' });
-    }
-
-    const cleanName = name.trim();
-    const cleanPhone = phone.trim();
-
-    if (!/^\d{10}$/.test(cleanPhone)) {
-        return res.status(400).json({ error: 'Please enter a valid 10-digit phone number' });
-    }
-
-    // Generate a 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-    // Store in-memory with timestamp
-    otpStore[cleanPhone] = {
-        otp,
-        name: cleanName,
-        timestamp: Date.now()
-    };
-
-    // Return success along with the OTP (for UI simulation)
-    res.status(200).json({
-        message: 'OTP sent successfully',
-        phone: cleanPhone,
-        otp: otp
-    });
-});
-
-app.post('/api/auth/verify-otp', (req, res) => {
-    const { phone, otp } = req.body;
-    if (!phone || !otp) {
-        return res.status(400).json({ error: 'Phone number and OTP are required' });
-    }
-
-    const cleanPhone = phone.trim();
-    const cleanOtp = otp.trim();
-
-    const record = otpStore[cleanPhone];
-    if (!record) {
-        return res.status(400).json({ error: 'No OTP requested for this phone number' });
-    }
-
-    // OTP expires in 5 minutes
-    if (Date.now() - record.timestamp > 5 * 60 * 1000) {
-        delete otpStore[cleanPhone];
-        return res.status(400).json({ error: 'OTP has expired. Please request a new one.' });
-    }
-
-    if (record.otp !== cleanOtp) {
-        return res.status(400).json({ error: 'Invalid OTP code. Please try again.' });
-    }
-
-    // OTP is valid! Find or create user
-    const users = readDb(USERS_PATH);
-    let matchedUser = users.find(u => u.phone === cleanPhone);
-
-    if (!matchedUser) {
-        // Automatically register new user
-        const generatedEmail = `${cleanPhone}@accurapath.com`;
-        matchedUser = {
-            name: record.name,
-            email: generatedEmail,
-            phone: cleanPhone,
-            pass: '' // No password needed for OTP login
-        };
-        users.push(matchedUser);
-        writeDb(USERS_PATH, users);
-    }
-
-    // Clean up OTP store
-    delete otpStore[cleanPhone];
-
-    res.status(200).json({
-        message: 'Login successful',
-        user: { name: matchedUser.name, email: matchedUser.email, phone: matchedUser.phone }
-    });
-});
-
 app.post('/api/auth/register', (req, res) => {
     const { name, email, phone, pass } = req.body;
     if (!name || !email || !phone || !pass) {
