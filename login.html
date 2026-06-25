@@ -352,11 +352,11 @@
                     <form onsubmit="handleCustomerLogin(event)">
                         <div class="form-group">
                             <label for="login-email">Email Address or Phone Number*</label>
-                            <input type="text" id="login-email" placeholder="name@example.com or phone number" required>
+                            <input type="text" id="login-email" name="username" autocomplete="username" placeholder="name@example.com or phone number" required>
                         </div>
                         <div class="form-group">
                             <label for="login-pass">Password*</label>
-                            <input type="password" id="login-pass" placeholder="••••••••" required>
+                            <input type="password" id="login-pass" name="password" autocomplete="current-password" placeholder="••••••••" required>
                         </div>
                         <div style="text-align: right; margin-top: 6px; margin-bottom: 15px;">
                             <a href="#" onclick="showForgotPasswordPanel(event)" style="font-size: 13px; color: var(--primary-color); font-weight: 600; text-decoration: none;">Forgot Password?</a>
@@ -375,19 +375,19 @@
                     <form onsubmit="handleCustomerRegister(event)">
                         <div class="form-group">
                             <label for="reg-name">Full Name*</label>
-                            <input type="text" id="reg-name" placeholder="Enter your full name" required>
+                            <input type="text" id="reg-name" name="name" autocomplete="name" placeholder="Enter your full name" required>
                         </div>
                         <div class="form-group">
                             <label for="reg-email">Email Address*</label>
-                            <input type="email" id="reg-email" placeholder="name@example.com" required>
+                            <input type="email" id="reg-email" name="email" autocomplete="email" placeholder="name@example.com" required>
                         </div>
                         <div class="form-group">
                             <label for="reg-phone">Phone Number*</label>
-                            <input type="tel" id="reg-phone" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
+                            <input type="tel" id="reg-phone" name="phone" autocomplete="tel" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
                         </div>
                         <div class="form-group">
                             <label for="reg-pass">Password*</label>
-                            <input type="password" id="reg-pass" placeholder="Create a strong password" required minlength="4">
+                            <input type="password" id="reg-pass" name="password" autocomplete="new-password" placeholder="Create a strong password" required minlength="4">
                         </div>
                         <button type="submit" class="btn-submit">
                             Register Account <i class="fa-solid fa-user-plus"></i>
@@ -471,6 +471,17 @@
             }
         }
 
+        // Auto-populate saved username on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('savedUsername');
+            if (savedUser) {
+                const emailInput = document.getElementById('login-email');
+                if (emailInput) {
+                    emailInput.value = savedUser;
+                }
+            }
+        });
+
         // Handle Customer Login
         async function handleCustomerLogin(e) {
             e.preventDefault();
@@ -491,6 +502,10 @@
 
                 // Save session in local storage
                 localStorage.setItem('currentUser', JSON.stringify(data.user));
+                
+                // Save username to remember it for next time
+                localStorage.setItem('savedUsername', email);
+                
                 showAlert('Login successful! Redirecting...', 'success');
                 
                 setTimeout(() => {
@@ -529,6 +544,10 @@
 
                 // Auto login after registration
                 localStorage.setItem('currentUser', JSON.stringify(data.user));
+                
+                // Save username to remember it
+                localStorage.setItem('savedUsername', email);
+                
                 showAlert('Account created successfully! Redirecting...', 'success');
 
                 setTimeout(() => {
