@@ -1,34 +1,18 @@
 [
   {
-    "id": "B-360936",
+    "id": "B-191027",
     "patientName": "Daksh Pakhale",
-    "patientAge": "21",
+    "patientAge": "20",
     "patientGender": "Male",
-    "patientPhone": "9669593661",
-    "patientAddress": "nanda nagar, Indore - 452011",
-    "slotDate": "2026-06-19",
-    "slotTime": "06:00 - 08:00 AM",
-    "items": "Swasthfit Complete Care Package, Complete Blood Count (CBC)",
-    "totalPrice": "₹1348",
-    "status": "confirmed",
-    "phlebotomist": "Mehul Bichpuriya",
-    "userEmail": "dakshpakhale236@gmail.com",
-    "dateCreated": "17/6/2026"
-  },
-  {
-    "id": "B-270305",
-    "patientName": "Sudesh lehri",
-    "patientAge": "45",
-    "patientGender": "Male",
-    "patientPhone": "9303831588",
-    "patientAddress": "M-238 janta quarter nanda nagar, Indore - 452011",
-    "slotDate": "2026-06-19",
-    "slotTime": "06:00 - 08:00 AM",
-    "items": "Swasthfit Super Active Full Body Checkup",
-    "totalPrice": "₹1499",
+    "patientPhone": "93003831588",
+    "patientAddress": "M-238 Janta Quarter, Indore - 452011",
+    "slotDate": "2026-06-26",
+    "slotTime": "12:00 - 02:00 PM",
+    "items": "Complete Blood Count (CBC)",
+    "totalPrice": "₹349",
     "status": "ready",
     "phlebotomist": "Mehul Bichpuriya",
     "userEmail": "dakshpakhale236@gmail.com",
-    "dateCreated": "18/6/2026"
+    "dateCreated": "25/6/2026"
   }
 ]

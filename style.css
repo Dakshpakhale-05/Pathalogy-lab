@@ -2243,3 +2243,120 @@ button {
     color: white !important;
 }
 
+/* RESPONSIVE ADMIN PORTAL FOR MOBILE DEVICES */
+@media (max-width: 768px) {
+    .admin-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        text-align: center;
+    }
+    
+    .admin-nav h2 {
+        font-size: 18px;
+        line-height: 1.3;
+        margin-bottom: 2px;
+    }
+    
+    .admin-nav > div {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .admin-nav span {
+        font-size: 12px;
+        text-align: left;
+    }
+    
+    .admin-nav .cart-btn {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+        height: auto !important;
+        width: auto !important;
+    }
+
+    .admin-body {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 10px 16px;
+        gap: 10px;
+        white-space: nowrap;
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+    
+    .admin-sidebar::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome/Safari */
+    }
+
+    .admin-sidebar .patient-menu-item {
+        flex-shrink: 0;
+        padding: 8px 14px;
+        font-size: 12.5px;
+        margin: 0;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .admin-content {
+        padding: 16px;
+    }
+
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .admin-stat-card {
+        padding: 14px;
+    }
+
+    .admin-stat-card h4 {
+        font-size: 10px;
+    }
+
+    .admin-stat-card p {
+        font-size: 20px;
+        margin-top: 2px;
+    }
+
+    .admin-card {
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+
+    .admin-card h3 {
+        font-size: 15px;
+    }
+
+    .admin-table th, .admin-table td {
+        padding: 10px 12px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    
+    .admin-actions-cell {
+        gap: 6px;
+    }
+    
+    .admin-select {
+        padding: 4px 6px;
+        font-size: 11px;
+    }
+}
+
