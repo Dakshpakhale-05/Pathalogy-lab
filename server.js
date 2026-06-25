@@ -569,7 +569,7 @@ app.listen(PORT, () => {
     }
 
     console.log(`=======================================================`);
-    console.log(`MehulsConnect Diagnostics Backend Server is running!`);
+    console.log(`AccuraPath Lab Diagnostics Backend Server is running!`);
     console.log(`Local Access: http://localhost:${PORT}`);
     console.log(`Wi-Fi Network Access (Mobile/Laptop): http://${localIp}:${PORT}`);
     console.log(`=======================================================`);
